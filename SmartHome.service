@@ -1,0 +1,13 @@
+[Unit]
+Description= Smart home pingig software for monitoring Ping response times
+After=network.target
+
+[Service]
+Type=simple
+User=smartorange
+WorkingDirectory=/home/smartorange
+ExecStart=/usr/bin/python3 /home/smartorange/SmartHome/pinger.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+*.txt
+*.pyc
+*.crt
+*.key
+*test*
+*DEPRECATED*

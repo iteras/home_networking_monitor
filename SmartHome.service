@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=smartorange
 WorkingDirectory=/home/smartorange
-ExecStart=/usr/bin/python3 /home/smartorange/SmartHome/pinger.py
+ExecStart=/usr/bin/python3 /home/smartorange/SmartHome/bin/pinger.py
 Restart=always
 
 [Install]

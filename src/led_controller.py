@@ -9,10 +9,11 @@ from time import sleep
 from pyA20.gpio import gpio
 from pyA20.gpio import port
 
-# Declare ports
+# Declare
 LED_green = port.PA12
 LED_blue = port.PA11
 LED_red = port.PA7
+
 
 # Init GPIO and declare outputs and inputs
 gpio.init()
@@ -56,7 +57,7 @@ class LED_controller(object):
                     for led in color:
                         gpio.output(led, 1)
                     for led in differences:
-                        gpio.output(led, x0)
+                        gpio.output(led, 0)
             except KeyboardInterrupt:
                 # All LEDs off
                 for led in white:

@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
 import subprocess
+import sys
 import json
+sys.path.insert(0,'/home/pi/SmartHome/src/')
 import led_controller
 
 WARNING = 70
@@ -10,7 +12,7 @@ BAD = 200
 
 def ping():
     try:
-        return subprocess.check_output(["ping -I eth0 -c 4 www.google.com"], shell=True).decode("UTF-8").split("\n")
+        return subprocess.check_output(["ping -I wlan0 -c 4 www.google.com"], shell=True).decode("UTF-8").split("\n")
     except subprocess.CalledProcessError:
         return None
 
@@ -36,11 +38,11 @@ def get_data(ping):
 
 
 def decide_status(data):
-    if float(data["max"]) >= BAD:
+    if float(data["avg"]) >= BAD:
         return "red"
-    elif float(data["max"]) >= WARNING:
+    elif float(data["avg"]) >= WARNING:
         return "yellow"
-    elif float(data["max"]) < WARNING:
+    elif float(data["avg"]) < WARNING:
         return "green"
 
 
@@ -52,10 +54,11 @@ if __name__ == "__main__":
             ping_result = ping()
             if ping_result is not None:
                 data = get_data(ping_result)
-                print(data["max"])
+                print(data["avg"])
                 result = decide_status(data)
                 print(result)
             else:
+                print(ping_result)
                 result = "magneta"
             if controller is None:
                 controller = led_controller.LED_controller()

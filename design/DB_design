@@ -1,0 +1,21 @@
+SBC temperature:
+    ID, primary, long, auto_increment, not null
+    up_time, float, not null
+    ts, float, not null
+    temp1, float, not null
+    temp2, float, not null
+
+Ping response time:
+    ID, primary, long, auto_increment, not null
+    ts, float, not null
+    min, float
+    avg, float
+    max, float
+
+Room enviornment:
+    ID, primary, long, auto_increment, not null
+    ts, float, not null
+    room, string/varchar
+    address, string/varchar
+    humidity, float
+    temp, float

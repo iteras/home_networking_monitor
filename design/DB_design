@@ -19,3 +19,8 @@ Room enviornment:
     address, string/varchar
     humidity, float
     temp, float
+
+scripts:
+sqlite3 SmartHome.db
+CREATE TABLE sbc_temperature (ID INTEGER PRIMARY KEY ASC,up_time NUMERIC, ts NUMERIC, temp NUMERIC);
+

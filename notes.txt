@@ -1,0 +1,4 @@
+Removed unattended-upgrades
+Had to add key(https://askubuntu.com/questions/308760/w-gpg-error-http-ppa-launchpad-net-precise-release-the-following-signatures)
+Installed GPIO-H3 package from github
+Installed python-dev and python3-devs

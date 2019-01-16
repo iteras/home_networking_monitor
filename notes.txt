@@ -2,3 +2,18 @@ Removed unattended-upgrades
 Had to add key(https://askubuntu.com/questions/308760/w-gpg-error-http-ppa-launchpad-net-precise-release-the-following-signatures)
 Installed GPIO-H3 package from github
 Installed python-dev and python3-devs
+
+________________________________________________________________________________________________________________________
+Using sqlite:
+
+~/PycharmProjects/home_networking_monitor/Server/django_server$ python3 manage.py shell
+
+from metrics.models import Room_temperature
+from metrics.models import SBC
+from django.utils import timezone
+
+sbc = SBC.objects.last()
+d = Room_environment(address="Tule 4 - 46", room="living-room", temperature=21.2, humidity=65,ts=timezone.now(),sbc=sbc)
+
+d.save()
+________________________________________________________________________________________________________________________

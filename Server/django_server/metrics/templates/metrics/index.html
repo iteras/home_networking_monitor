@@ -1,0 +1,9 @@
+{% if SBC_list %}
+    <ul>
+    {% for SBC in SBC_list %}
+        <li><a href="/SBC/{{ sbc.id }}/">{{ SBC.temperature }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No SBC data available.</p>
+{% endif %}s

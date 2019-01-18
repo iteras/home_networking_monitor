@@ -4,7 +4,8 @@
         <li><a href="/SBC/{{ sbc.id }}/">{{ SBC.temperature }}</a></li>
     {% endfor %}
     </ul>
-    {{ cht_fruits|safe }}
+{% elif cht_sbc %}
+    <p>{{ cht_sbc|safe }}</p>
 {% else %}
-    <p>No SBC data available.</p>
-{% endif %}s
+<p>No SBC data available.</p>
+{% endif %}

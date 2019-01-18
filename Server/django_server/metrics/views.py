@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # Create your views here.
 from django.http import HttpResponse
 from django.template import loader
@@ -29,23 +27,16 @@ def sbc_temperature_data(request, sbc_id):
     return HttpResponse(template.render(context, request))
 
 
-class indexView(TemplateView):
-    template_name = 'index.html'
-    loader.get_template('metrics/index.html')
+def sbc_piechart(request):
+#    template_name = 'index.html'
+    template = loader.get_template('metrics/index.html')
 
-    def get_context_data(self, **kwargs):
-        context = super(indexView, self).get_context_data(**kwargs)
 
-        # Instantiate our chart. We'll keep the size/style/etc.
-        # config here in the view instead of `charts.py`.
-        cht_fruits = SBCPieChart(
-            height=600,
-            width=800,
-            explicit_size=True,
-            style=DarkStyle
-        )
-
-        # Call the `.generate()` method on our chart object
-        # and pass it to template context.
-        context['cht_fruits'] = cht_fruits.generate()
-        return context
+    cht_sbc = SBCPieChart(
+        height=600,
+        width=800,
+        explicit_size=True,
+        style=DarkStyle
+    )
+    context = {'cht_sbc' : cht_sbc.generate()}
+    return HttpResponse(template.render(context,request))

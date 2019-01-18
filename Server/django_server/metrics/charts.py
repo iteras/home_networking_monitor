@@ -14,8 +14,7 @@ class SBCPieChart():
         '''
         data = {}
         for sbc in SBC.objects.all():
-            data[sbc.name] = sbc.temperature
-        print("data returned")
+            data["temperature"] = sbc.temperature
         return data
 
     def generate(self):

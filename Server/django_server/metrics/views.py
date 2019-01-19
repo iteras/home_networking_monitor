@@ -22,13 +22,10 @@ def sbc_post(request):
     if request.method == 'GET':
         return HttpResponse("This url does not support REST GET")
     elif request.method == 'POST':
-#        data = request.body.decode("utf-8")
         data = json.loads(request.body.decode("UTF-8"))
-        print(data)
-#        list = []
-#        list.append(request)
-#        response = {"response": list}
-        response = request.POST.get('Hello')
+        sbc = SBC(temperature=data["temperature"], ts=data["ts"])
+        sbc.save()
+        response = "Saved SBC object: %s" % sbc
         return HttpResponse(response)
 
 

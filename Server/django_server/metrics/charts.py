@@ -63,8 +63,9 @@ class SBCLineChart():
         self.chart.x_labels = self.get_data("x_labels")
 
         # Add data to chart
-        for key, value in chart_data.items():
-            self.chart.add(key, value)
+        if chart_data is not None:
+            for key, value in chart_data.items():
+                self.chart.add(key, value)
 
         # Return the rendered SVG
         return self.chart.render(is_unicode=True)

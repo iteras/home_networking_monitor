@@ -18,6 +18,13 @@ def sbc_temperature(request, sbc_id):
     return HttpResponse(response % sbc_id)
 
 
+def sbc_post(request):
+    if request.method == 'GET':
+        return HttpResponse("This url does not support REST GET")
+    elif request.method == 'POST':
+        return HttpResponse(request)
+
+
 def sbc_temperature_data(request, sbc_id):
     SBC_list = SBC.objects.order_by("ts")
 #    output = "".join([str(s) for s in SBC_list])
@@ -38,9 +45,8 @@ def sbc_linechart(request):
 #        style=DarkStyle
 #    )
     cht_sbc = SBCLineChart(
-        height=200,
-        width=600,
-#        explict_size=True,
+        height=750,
+        width=2000,
         x_label_rotation=20
 
     )

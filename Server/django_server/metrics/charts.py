@@ -45,7 +45,6 @@ class SBCLineChart():
         time_range = 20 * 60 # Timerange shown data on graph
         ts_threshold = time.time() - time_range
         sbc_objects = SBC.objects.filter(ts__gte=ts_threshold)
-        print(sbc_objects)
         for sbc in sbc_objects:
             if type == "data":
                 list.append(sbc.temperature)

@@ -10,9 +10,10 @@ Using sqlite:
 
 from metrics.models import Room_temperature
 from metrics.models import SBC
-from django.utils import timezone
-
-sbc = SBC.objects.last()
+import random,time
+sbc = SBC(temperature=round(random.uniform(42, 55),1), ts=time.time())
+sbc.save()
+#sbc = SBC.objects.last()
 d = Room_environment(address="Tule 4 - 46", room="living-room", temperature=21.2, humidity=65,ts=timezone.now(),sbc=sbc)
 
 d.save()

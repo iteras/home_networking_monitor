@@ -4,6 +4,8 @@ import os
 import sys
 import subprocess
 import time
+import pycurl
+import json
 
 if not os.getegid() == 0:
     sys.exit('Script must be run as root')
@@ -14,6 +16,19 @@ def get_cpu_temp():
                  .decode("UTF-8"))/100
     return temp
 
+
+def post_data(cpu_temp):
+    c = pycurl.Curl()
+    c.setopt(pycurl.URL, '192.168.0.100:8000/metrics/sbc_post')
+    c.setopt(pycurl.HTTPHEADER, ['content-type: application/json'])
+    data = json.dumps({"temperature" : cpu_temp, "ts" : time.time()})
+    c.setopt(pycurl.POST, 1)
+    c.setopt(pycurl.POSTFIELDS, data)
+    c.setopt(pycurl.VERBOSE, 1)
+    c.perform()
+    print c.getinfo(pycurl.RESPONSE_CODE)
+    #print(curl_agent.getinfo(pycurl.RESPONSE_CODE))
+    c.close()
 
 if __name__ == "__main__":
     from pyA20.gpio import gpio
@@ -30,6 +45,10 @@ if __name__ == "__main__":
     while 1:
         cpu_temp = get_cpu_temp()
         output = "CPU temp: {0}C".format(cpu_temp)
+        try:
+            post_data(cpu_temp)
+        except:
+            print("Could not communicate with server")
         print output
         if cpu_temp > 55:
             gpio.output(fan_pin, 1)

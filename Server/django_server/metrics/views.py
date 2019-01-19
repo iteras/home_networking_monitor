@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import TemplateView
 from pygal.style import DarkStyle
-import pygal
+import pygal, json
 
 from .charts import SBCPieChart, SBCLineChart
 from .models import SBC
@@ -22,12 +22,18 @@ def sbc_post(request):
     if request.method == 'GET':
         return HttpResponse("This url does not support REST GET")
     elif request.method == 'POST':
-        return HttpResponse(request)
+#        data = request.body.decode("utf-8")
+        data = json.loads(request.body.decode("UTF-8"))
+        print(data)
+#        list = []
+#        list.append(request)
+#        response = {"response": list}
+        response = request.POST.get('Hello')
+        return HttpResponse(response)
 
 
 def sbc_temperature_data(request, sbc_id):
     SBC_list = SBC.objects.order_by("ts")
-#    output = "".join([str(s) for s in SBC_list])
     template = loader.get_template('metrics/index.html')
     context = {
         'SBC_list': SBC_list,
@@ -37,20 +43,11 @@ def sbc_temperature_data(request, sbc_id):
 
 def sbc_linechart(request):
     template = loader.get_template('metrics/index.html')
-
-#    cht_sbc = SBCPieChart(
-#        height=600,
-#        width=800,
-#        explicit_size=True,
-#        style=DarkStyle
-#    )
     cht_sbc = SBCLineChart(
         height=750,
         width=2000,
         x_label_rotation=20
 
     )
-
-#    context = {'cht_sbc' : cht_sbc.generate()}
     context = {'cht_sbc' : cht_sbc.generate()}
     return HttpResponse(template.render(context,request))

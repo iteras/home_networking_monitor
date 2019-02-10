@@ -16,7 +16,7 @@ class SBC(models.Model):
 
 
 class Room_environment(models.Model):
-    sbc = models.ForeignKey(SBC,on_delete=models.CASCADE)
+    sbc = models.ForeignKey(SBC ,on_delete=models.CASCADE, blank=True, null=True)
     address = models.CharField(max_length=64)
     room = models.CharField(max_length=16)
     temperature = models.FloatField(default=-1)

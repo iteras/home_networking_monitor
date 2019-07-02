@@ -7,8 +7,8 @@ import pygal, json
 
 import time
 
-from .charts import SBCPieChart, SBCLineChart
-from .models import SBC
+
+from .charts import * #SBCPieChart, SBCLineChart, RELineChart
 from .models import Room_environment
 
 
@@ -33,10 +33,21 @@ def re_post(request):
 
 def re_data(request,re_id):
     re_list = re.objects.order_by("ts")
-    template = loader.get_template('metrics/room_environment_data.html')
+    template = loader.get_template('metrics/re/room_environment_data.html')
     context = {
         re_list : re_list
     }
+    return HttpResponse(template.render(context,request))
+
+
+def re_data_linechart(request):
+    template = loader.get_template('metrics/re/index.html')
+    cht_re = RELineChart(
+        height=750,
+        width=2000,
+        x_label_rotation=20
+    )
+    context = {'cht_re' : cht_re.generate()}
     return HttpResponse(template.render(context,request))
 
 
@@ -58,7 +69,7 @@ def sbc_post(request):
 
 def sbc_temperature_data(request, sbc_id):
     SBC_list = SBC.objects.order_by("ts")
-    template = loader.get_template('metrics/index.html')
+    template = loader.get_template('metrics/sbc/index.html')
     context = {
         'SBC_list': SBC_list,
     }
@@ -66,7 +77,7 @@ def sbc_temperature_data(request, sbc_id):
 
 
 def sbc_linechart(request):
-    template = loader.get_template('metrics/index.html')
+    template = loader.get_template('metrics/sbc/index.html')
     cht_sbc = SBCLineChart(
         height=750,
         width=2000,

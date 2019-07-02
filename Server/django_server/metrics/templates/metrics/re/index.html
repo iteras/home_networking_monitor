@@ -1,0 +1,11 @@
+{% if RE_list %}
+    <ul>
+    {% for RE in RE_list %}
+        <li><a href="/RE/{{ re.id }}/">{{ RE.temperature }}</a></li>
+    {% endfor %}
+    </ul>
+{% elif cht_re %}
+    <p>{{ cht_re|safe }}</p>
+{% else %}
+<p>No room environment data available.</p>
+{% endif %}
